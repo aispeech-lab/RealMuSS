@@ -1,0 +1,908 @@
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MUSS: multi-cue-guided semi-supervised target speaker speech separation framework </title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+</head>
+<body style="background-color: #FFF;color: #000;line-height: 1.5em;margin: 0px;font-family: 'Lato', sans-serif;font-weight: 500;font-size:16px;width: 100%;height: 100%;   max-width: 100%;overflow-x: hidden;">
+
+<!-- Begin to draw page -->
+<div class="layui-container">
+
+    <!-- menu -->
+    <div>
+        <ul class="layui-nav layui-bg-cyan" lay-filter="" style="margin-bottom: 30px;">
+            <li class="layui-nav-item"><a href="./index.html">Home</a></li>
+            <li class="layui-nav-item"><a href="./demo.html">More Samples</a></li>
+            <!-- <li class="layui-nav-item"><a href="https://github.com/RealMUSS">Github</a></li> -->
+            <!-- <li class="layui-nav-item"><a href="https://github.com/RealMUSS">Paper</a></li> -->
+        </ul>
+    </div>
+
+
+    <!-- paper title ang abstract -->
+    <div>
+        <div style="margin-bottom: 30px; text-align:center;"> <h2 style="font-weight: 600;">Multi-Cue Guided Semi-Supervised Learning <br><br> toward Target Speaker Separation in Real Environments</h2> </div>
+        <div style="margin-bottom: 30px; text-align:center;"> <b>Authors:</b> Anonymous Authors</div>
+        <div style="margin:0 auto; width: 100%;"> <b>Abstract:</b> To solve the cocktail party problem in real multi-talker environments, this paper proposed a multi-cue guided semi-supervised target speaker separation method (MuSS). Our MuSS integrates three target speaker-related cues, including spatial, visual, and voiceprint cues. Under the guidance of the cues, the target speaker is separated into a predefined channel, and the interfering sources are separated into other channels with the optimal permutation. Both synthetic mixtures and real mixtures are utilized for semi-supervised training. Specifically, for synthetic mixtures, the separated target source and other separated interfering sources are trained to reconstruct the ground-truth references, while for real mixtures, the separated sources are remixed to reconstruct the input mixtures. Besides, in order to facilitate finetuning and evaluation the estimated source on real mixtures, we introduce a real multi-modal speech separation dataset, RealMuSS, which is collected in real-world scenarios and is comprised of more than seventy hours of multi-talker mixtures with high-quality pseudo references of the target speakers. Experimental results show that the pseudo references effectively improve the finetuning efficiency and successfully evaluate the estimated speech on real mixtures, and various cue-driven separation models are greatly improved in signal-to-noise ratio and speech recognition accuracy under our semi-supervised learning framework.</div>
+    </div>
+    
+    <!-- framework show -->
+    <div style="margin-top: 30px; margin-bottom: 30px; border-top:2px solid gray;">
+        <div><h3 style = "font-weight: 600; margin-top: 30px; margin-bottom: 30px; text-align: left;">Our Proposed Method</h3></div>
+        <div style="margin:0 auto; width: 100%; margin-bottom: 20px;">The figure below is our proposed multi-cue guided semi-supervised target speaker separation architecture. The separation model is guided by three speaker-related cues including spatial, visual and voiceprint cues. The training procedure is divided into three stages, where Stage 1 and Stage 2 are supervised learning on synthetic mixtures, and Stage 3 is semi-supervised learning on real mixtures. In Stage 3, different proportions of pseudo references would be fed to finetune the target source.</div>
+        <div><a><img src="./source/img/framework.png" width="100%"/></a></div>
+    </div>   
+
+    <!-- Demo show -->
+    
+    <div style="margin-top: 30px; margin-bottom: 30px; border-top:2px solid gray;">
+
+        <div><h3 style = "font-weight: 600; margin-top: 30px; text-align: left;">Demos &nbsp&nbsp<a style="text-decoration: underline; color: gray;" href="./demo.html">(See More Samples)</a></h3></div>
+
+        <div style="background-color: ghostwhite;">
+            <div id="paper_abstract" style="margin-top: 30px; margin-bottom: 10px;"> <b>Description:</b> There are 15 models in total, including our MuSS with 10 possible cue combinations, and 5 baseline models. The predicted wavforms and evaluations in WER (%) and SI-SDR (dB) of English and Mandarin mixtures are as follows:</div>
+            <div style="margin-bottom: 30px;"><b>Note: &nbsp&nbsp VP: Voiceprint Cue &nbsp&nbsp&nbsp&nbsp VIS: Visual Cue&nbsp&nbsp&nbsp&nbsp SP: Spatial Cue &nbsp&nbsp&nbsp&nbsp BI: Binaural Input</b></div>
+        </div>
+
+        <div class="layui-row" style="text-align: center; margin-bottom: 30px;">
+            <div class="layui-col-md12" >
+                <a><img src="./source/img/scenarios.png" width="90%"/></a>
+            </div>
+        </div>
+
+        <div class="layui-bg-gray" style="height: 900px; overflow-y: auto; padding: 5px;">
+            <!-- 1st row -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px;">
+                <div class="layui-col-md3" >
+                    <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;"><h3 style="font-weight: 600;"></h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;"><h3 style="font-weight: 600;">SCENARIO ONE</h3></div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;"><h3 style="font-weight: 600;">SCENARIO TWO</h.></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;"><h3 style="font-weight: 600;">SCENARIO THREE</h3></div>
+                </div>
+            </div>
+        
+            <!-- 2st row mixture-->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">MIXTURE</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_mix.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 160%; SI-SDR: 2.35)</h4></div>
+                        <div><a><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_mix.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_mix.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 62.5%; SI-SDR: 3.44)</h4></div>
+                        <div><a><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_mix.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_mix.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 310%; SI-SDR: -0.56)</h4></div>
+                        <div><a><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_mix.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 3st row PSEUDO TARGET -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">PSEUDO REFERENCE</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_pesudo.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR:/)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_pesudo.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_pesudo.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR:/)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_pesudo.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_pesudo.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR:/)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_pesudo.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 4st row BI-SP-VIS-VP MODEL -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">Our MuSS with BI-SP-VIS-VP</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-SP-VIS-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 20.39)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-SP-VIS-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-SP-VIS-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 16.76)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-SP-VIS-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-SP-VIS-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 9.81)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-SP-VIS-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 5st row BI-SP-VIS -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">Our MuSS with BI-SP-VIS</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-SP-VIS_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 19.94)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-SP-VIS_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-SP-VIS_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 6.25%; SI-SDR: 16.8)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-SP-VIS_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-SP-VIS_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 340%; SI-SDR: -3.27)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-SP-VIS_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 6st row BI-SP-VP -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">Our MuSS with BI-SP-VP</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-SP-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 19.32)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-SP-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-SP-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 6.25%; SI-SDR: 15.51)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-SP-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-SP-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 13.38)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-SP-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- 7st row BI-SP -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">Our MuSS with BI-SP</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-SP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 19.16)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-SP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-SP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 6.25%; SI-SDR: 16.27)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-SP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-SP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 350%; SI-SDR: -16.99)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-SP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 8st row BI-VIS-VP -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">Our MuSS with BI-VIS-VP</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-VIS-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 17.68)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-VIS-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-VIS-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 16.25)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-VIS-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-VIS-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 16.33)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-VIS-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 9st row BI-VIS -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">Our MuSS with BI-VIS</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-VIS_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 18.98)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-VIS_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-VIS_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 6.25%; SI-SDR: 17.22)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-VIS_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-VIS_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 15.38)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-VIS_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 10st row BI-VP -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">Our MuSS with BI-VP</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 20%; SI-SDR: 17.42)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BI-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 6.25%; SI-SDR: 15.62)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BI-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 15.96)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BI-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 11st row VIS-VP -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">Our MuSS with VIS-VP</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_VIS-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 11.05)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_VIS-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_VIS-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 56.25%; SI-SDR: 5.76)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_VIS-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;" /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_VIS-VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 11.22)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_VIS-VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 12st row VIS -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">Our MuSS with VIS</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_VIS_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 11.61)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_VIS_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_VIS_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 56.25%; SI-SDR: 7.29)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_VIS_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_VIS_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 11.33)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_VIS_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 13st row VP -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">Our MuSS with VP</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 40%; SI-SDR: 9.73)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 56.25%; SI-SDR: 6.68)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_VP_ST7.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 11.24)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_VP_ST7.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 14st row PIT+MIXIT (BI) -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">TasNet-MixIT (BI)</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BIPITST4.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 14.59)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_BIPITST4.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BIPITST4.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 6.25%; SI-SDR: 11.27)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_BIPITST4.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BIPITST4.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 11.32)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_BIPITST4.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 15st row PIT+MIXIT  -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">TasNet-MixIT</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_PITST4.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 40%; SI-SDR: 9.06)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_PITST4.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_PITST4.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 56.25%; SI-SDR: 4.41)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_PITST4.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_PITST4.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 11.19)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_PITST4.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 16st row CONFORMER-LARGE  -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">Conformer-Large</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_conformerLarge.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 11.36)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_conformerLarge.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_conformerLarge.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 10.08)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_conformerLarge.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_conformerLarge.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 9.94)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_conformerLarge.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 17st row CONFORMER-BASE  -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">Conformer-Base</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_conformerBase.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 40%; SI-SDR: 7.82)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_conformerBase.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_conformerBase.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 9.37)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_conformerBase.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_conformerBase.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 13.83)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_conformerBase.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- 18st row SEPFORMER  -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: white;">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 40%;"><h3 style="font-weight: 600;">Sepformer</h3></div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_Sepformer.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 20%; SI-SDR: 8.53)</h4></div>
+                        <div><img src="./source/img/055JQY-EN/CLIP0007_055JQY-EN_056SWJ-EN_READ_STREET_01_Sepformer.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_Sepformer.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">WER: 56.25%; SI-SDR: 1.5)</h4></div>
+                        <div><img src="./source/img/003HYZ/CLIP0100_003HYZ_001XJM_DIALOG_CAFFEE_01_Sepformer.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div>
+                        <div>
+                            <audio controls style="width: 260px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/audio/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_Sepformer.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%; SI-SDR: 6.47)</h4></div>
+                        <div><img src="./source/img/002CJ-EN/CLIP0015_002CJ-EN_013HYT-EN_READ_CONFERENCE_01_Sepformer.png" style="width: 260px; margin-top: 5px; margin-bottom: 5px;"  /></div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        
+
+        </div>
+    
+    </div>
+
+
+    <!-- Dataset -->
+    <div style="margin-top: 30px; margin-bottom: 30px; border-top:2px solid gray;">
+        <div><h3 style = "font-weight: 600; margin-top: 30px; margin-bottom: 30px; text-align: left;">Dataset</h3></div>
+    </div>
+
+    <div style="background-color:whitesmoke;">
+        <div >
+            <div style="text-align: center; margin-bottom: 40px;"><h2 style="color:rgb(53, 50, 49); font-size: 50px; font-weight: 500; font-style: unset;"><br><br>RealMuSS</h2></div>
+            <div style="margin-bottom: 50px; text-align: center;">
+                <h3 style="font-style: oblique;">A 70+ hours Multi-modal English&Mandarin dataset for acoustic tuning and evaluation of speech separation.</h3>
+            </div>
+            <div class="layui-row" style="margin-bottom: 50px;">
+                <div class="layui-col-md6" style="text-align: center;">
+                    <h3 style="font-size: 13px;"><br>The data is recorded in a variety of real scenarios.<br><br></h3>
+                    <a><img src="./source/img/pie.png" width="80%"/></a>
+                </div>
+                <div class="layui-col-md6" style="text-align: center;">
+                    <h3 style="font-size: 13px;">The ratio of males and females, Mandarin and English, and the target person towards the device or any angle deviation is basically balanced when recording. Besides, the target person's reading and dialogue scenes accounted for 75% and 25% respectively.</h3>
+                    <a><img src="./source/img/bar.png" width="80%"/></a>
+                </div>
+            </div>
+            <div style="text-align: center;"><h3 style="font-style: oblique; color: rgb(150, 150, 161);">We are preparing for REALMUSS dataset, which is scheduled to be officially released soon.<br><br><br><br></h3></div>
+        </div>
+    </div>
+    
+
+    <!-- Bottom of Page -->
+    <div id="footer" style="border-top:2px solid gray; margin:0 auto; text-align:center; margin-top:50px; font-size:14px;">
+        <div><i>&copy MUSS - January 2022</i></div> 
+    </div>
+            
+
+</div>
+
+
+
+
+  
+
+
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="./layui/layui.js"></script>
+
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+
+<!-- <script>
+    $('audio').on('click', function(){
+    $('audio').not(this).each(function(){
+    this.pause();
+    });
+    });
+</script> -->
+
+<!-- <script>
+//iframe自适应
+$(window).on('resize', function() {
+		// 设置Iframe窗口大小
+		configIframe();
+	}).resize();
+function configIframe(){
+		var $content = $('.layui-body');
+		$content.height($(this).height() - 75);
+		$content.width($(this).width() - 250); 
+		$content.find('iframe').each(function() {
+			$(this).height($content.height());
+			$(this).width($content.width());
+		});
+		var $screenWidth = $("body").width();
+		var $mainHeader = $(".layui-header"); 
+		$mainHeader.width($screenWidth - $(".layui-side ").width()); 
+		
+	}
+</script> -->
+
+</body>
+</html>

@@ -1,0 +1,392 @@
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MUSS: multi-cue-guided semi-supervised target speaker speech separation framework </title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+</head>
+<body style="background-color: #FFF;color: #000;line-height: 1.5em;margin: 0px;font-family: 'Lato', sans-serif;font-weight: 500;font-size:16px;width: 100%;height: 100%;   max-width: 100%;overflow-x: hidden;">
+
+<!-- Begin to draw page -->
+<div class="layui-container">
+
+    <!-- menu -->
+    <div>
+        <ul class="layui-nav layui-bg-cyan" lay-filter="" style="margin-bottom: 30px;">
+            <li class="layui-nav-item"><a href="./index.html">Home</a></li>
+            <li class="layui-nav-item"><a href="./demo.html">More Samples</a></li>
+            <!-- <li class="layui-nav-item"><a href="https://github.com/RealMUSS">Github</a></li> -->
+            <!-- <li class="layui-nav-item"><a href="https://github.com/RealMUSS">Paper</a></li> -->
+        </ul>
+    </div>
+
+    <!-- Demo show -->
+    
+    <div style="margin-top: 30px; margin-bottom: 30px; ">
+
+        <div><h3 style = "font-weight: 600; margin-top: 30px; margin-bottom: 30px; text-align: left;">Here are various samples of mixture and pseudo reference in more scenarios: </h3></div>
+
+
+
+        <div class="layui-bg-gray" style="padding: 5px;">
+            <!-- row -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px;">
+                <div class="layui-col-md3" >
+                    <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;"><h3 style="font-weight: 600;">SCENARIOS</h3></div>
+                </div>
+
+                <div class="layui-col-md5">
+                    <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;"><h3 style="font-weight: 600;">MIXTURE</h3></div>
+                </div>
+        
+                <div class="layui-col-md4">
+                    <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;"><h3 style="font-weight: 600;">PSEUDO REFERENCE</h.></div>
+                </div>
+            </div>
+        
+            <!-- 1st CASE-->
+            <div class="layui-row" style="text-align: center; background-color: white">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 50%;"><h4 style="font-size: medium; font-weight: 600;">Two men reading in Mandarin beside a city street </h4></div>
+                </div>
+
+                <div class="layui-col-md5">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case1/CLIP0546_001XJM_003HYZ_READ_STREET_01_mix.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 73.08%)</h4></div>
+                        <div><a><img src="./source/more_samples/case1/CLIP0546_001XJM_003HYZ_READ_STREET_01_mix.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md4">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case1/CLIP0546_001XJM_003HYZ_READ_STREET_01_BI-SP-VIS-VP_ST2.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%)</h4></div>
+                        <div><a><img src="./source/more_samples/case1/CLIP0546_001XJM_003HYZ_READ_STREET_01_BI-SP-VIS-VP_ST2.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 2st CASE -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: ghostwhite">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 50%;"><h4 style="font-size: medium; font-weight: 600;">A man and a woman reading in English in a mall</h4></div>
+                </div>
+
+                <div class="layui-col-md5">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case2/CLIP0110_079CZW-EN_080CYC-EN_READ_MALL_01_mix.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 89.66%)</h4></div>
+                        <div><a><img src="./source/more_samples/case2/CLIP0110_079CZW-EN_080CYC-EN_READ_MALL_01_mix.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md4">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case2/CLIP0110_079CZW-EN_080CYC-EN_READ_MALL_01_BI-SP-VIS-VP_ST2.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 3.45%)</h4></div>
+                        <div><a><img src="./source/more_samples/case2/CLIP0110_079CZW-EN_080CYC-EN_READ_MALL_01_BI-SP-VIS-VP_ST2.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 3st CASE-->
+            <div class="layui-row" style="text-align: center; background-color: white">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 50%;"><h4 style="font-size: medium; font-weight: 600;">Two women chatting in English in a conference room</h4></div>
+                </div>
+
+                <div class="layui-col-md5">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case3/CLIP0038_072DY-EN_071YY-EN_DIALOG_CONFERENCE_01_mix.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 27.27%)</h4></div>
+                        <div><a><img src="./source/more_samples/case3/CLIP0038_072DY-EN_071YY-EN_DIALOG_CONFERENCE_01_mix.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md4">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case3/CLIP0038_072DY-EN_071YY-EN_DIALOG_CONFERENCE_01_BI-SP-VIS-VP_ST2.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 4.55%)</h4></div>
+                        <div><a><img src="./source/more_samples/case3/CLIP0038_072DY-EN_071YY-EN_DIALOG_CONFERENCE_01_BI-SP-VIS-VP_ST2.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 4st CASE -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: ghostwhite">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 50%;"><h4 style="font-size: medium; font-weight: 600;">A man and a woman reading in Mandarin in a cafe</h4></div>
+                </div>
+
+                <div class="layui-col-md5">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case4/CLIP0010_045JHF_046ZJ_READ_CAFFEE_01_mix.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 51.85%)</h4></div>
+                        <div><a><img src="./source/more_samples/case4/CLIP0010_045JHF_046ZJ_READ_CAFFEE_01_mix.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md4">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case4/CLIP0010_045JHF_046ZJ_READ_CAFFEE_01_BI-SP-VP_ST2.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%)</h4></div>
+                        <div><a><img src="./source/more_samples/case4/CLIP0010_045JHF_046ZJ_READ_CAFFEE_01_BI-SP-VP_ST2.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5st CASE-->
+            <div class="layui-row" style="text-align: center; background-color: white">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 50%;"><h4 style="font-size: medium; font-weight: 600;">Two men reading in English beside a city street</h4></div>
+                </div>
+
+                <div class="layui-col-md5">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case5/CLIP0034_027XYY-EN_028YJL-EN_READ_STREET_01_mix.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 66.67%)</h4></div>
+                        <div><a><img src="./source/more_samples/case5/CLIP0034_027XYY-EN_028YJL-EN_READ_STREET_01_mix.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md4">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case5/CLIP0034_027XYY-EN_028YJL-EN_READ_STREET_01_BI-SP_ST2.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%)</h4></div>
+                        <div><a><img src="./source/more_samples/case5/CLIP0034_027XYY-EN_028YJL-EN_READ_STREET_01_BI-SP_ST2.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 6st CASE -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: ghostwhite">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 50%;"><h4 style="font-size: medium; font-weight: 600;">A man and a woman reading in Mandarin in a office</h4></div>
+                </div>
+
+                <div class="layui-col-md5">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case6/CLIP0021_010WHR_009SQY_READ_OFFICE_01_mix.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 65.52%)</h4></div>
+                        <div><a><img src="./source/more_samples/case6/CLIP0021_010WHR_009SQY_READ_OFFICE_01_mix.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md4">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case6/CLIP0021_010WHR_009SQY_READ_OFFICE_01_BI-SP-VIS-VP_ST2.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 6.9%)</h4></div>
+                        <div><a><img src="./source/more_samples/case6/CLIP0021_010WHR_009SQY_READ_OFFICE_01_BI-SP-VIS-VP_ST2.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7st CASE-->
+            <div class="layui-row" style="text-align: center; background-color: white">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 50%;"><h4 style="font-size: medium; font-weight: 600;">Two women reading in English beside a city street</h4></div>
+                </div>
+
+                <div class="layui-col-md5">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case7/CLIP0103_056SWJ-EN_055JQY-EN_READ_STREET_01_mix.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 87.5%)</h4></div>
+                        <div><a><img src="./source/more_samples/case7/CLIP0103_056SWJ-EN_055JQY-EN_READ_STREET_01_mix.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md4">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case7/CLIP0103_056SWJ-EN_055JQY-EN_READ_STREET_01_BI-SP-VIS-VP_ST2.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%)</h4></div>
+                        <div><a><img src="./source/more_samples/case7/CLIP0103_056SWJ-EN_055JQY-EN_READ_STREET_01_BI-SP-VIS-VP_ST2.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 8st CASE -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: ghostwhite">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 50%;"><h4 style="font-size: medium; font-weight: 600;">Two women reading in Mandarin in a mall</h4></div>
+                </div>
+
+                <div class="layui-col-md5">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case8/CLIP0063_049LC_050WY_READ_MALL_01_mix.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 50.94%)</h4></div>
+                        <div><a><img src="./source/more_samples/case8/CLIP0063_049LC_050WY_READ_MALL_01_mix.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md4">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case8/CLIP0063_049LC_050WY_READ_MALL_01_BI-SP-VIS-VP_ST2.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 3.77%)</h4></div>
+                        <div><a><img src="./source/more_samples/case8/CLIP0063_049LC_050WY_READ_MALL_01_BI-SP-VIS-VP_ST2.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9st CASE-->
+            <div class="layui-row" style="text-align: center; background-color: white">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 50%;"><h4 style="font-size: medium; font-weight: 600;">A man and a woman chatting in English in a conference room</h4></div>
+                </div>
+
+                <div class="layui-col-md5">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case9/CLIP0005_081XHY-EN_082DHW-EN_DIALOG_CONFERENCE_01_mix.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 66.67%)</h4></div>
+                        <div><a><img src="./source/more_samples/case9/CLIP0005_081XHY-EN_082DHW-EN_DIALOG_CONFERENCE_01_mix.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md4">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case9/CLIP0005_081XHY-EN_082DHW-EN_DIALOG_CONFERENCE_01_BI-SP_ST2.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%)</h4></div>
+                        <div><a><img src="./source/more_samples/case9/CLIP0005_081XHY-EN_082DHW-EN_DIALOG_CONFERENCE_01_BI-SP_ST2.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 10st CASE -->
+            <div class="layui-row" style="text-align: center; margin-bottom: 10px; background-color: ghostwhite">
+                <div class="layui-col-md3">
+                    <div style="text-align: center; margin-top: 50%;"><h4 style="font-size: medium; font-weight: 600;">A man and a woman reading in Mandarin in a office</h4></div>
+                </div>
+
+                <div class="layui-col-md5">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case10/CLIP0088_015CHJ_016HT_READ_OFFICE_01_mix.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 87.5%)</h4></div>
+                        <div><a><img src="./source/more_samples/case10/CLIP0088_015CHJ_016HT_READ_OFFICE_01_mix.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+        
+                <div class="layui-col-md4">
+                    <div>
+                        <div>
+                            <audio controls style="width: 320px; margin-top: 5px; margin-bottom: 5px;">
+                                <source src="./source/more_samples/case10/CLIP0088_015CHJ_016HT_READ_OFFICE_01_BI-SP-VIS-VP_ST2.wav" type="audio/mpeg">
+                            </audio>
+                        </div>
+                        <div><h4 style="font-weight: 600;">(WER: 0%)</h4></div>
+                        <div><a><img src="./source/more_samples/case10/CLIP0088_015CHJ_016HT_READ_OFFICE_01_BI-SP-VIS-VP_ST2.png" style="width: 320px; margin-top: 5px; margin-bottom: 5px;"  /></a></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    
+    </div>
+
+
+   
+    
+
+    <!-- Bottom of Page -->
+    <div id="footer" style="border-top:2px solid gray; margin:0 auto; text-align:center; margin-top:50px; font-size:14px;">
+        <div><i>&copy MUSS - January 2022</i></div> 
+    </div>
+            
+
+</div>
+
+
+
+
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="./layui/layui.js"></script>
+
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+
+
+</script> -->
+
+</body>
+</html>
